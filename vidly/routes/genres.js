@@ -39,14 +39,13 @@ router.post("/", (req, res) => {
   res.send(genre);
 });
 
-router.delete("/:genre", (req, res) => {
-  const newGenre = genres.find((c) => c.genre === req.params.genre);
-  if (!newGenre) {
-    res.status(404).send("The genre you entered does not exist ");
+router.delete("/:genre", async (req, res) => {
+  const genre = await Genre.findOneAndDelete({ genre: req.params.genre });
+  if (!genre) {
+    return res.status(404).send("The genre you entered does not exist ");
   }
-  const index = genres.indexOf(newGenre);
-  genres.splice(index, 1);
-  res.send(genres);
+  genre.save();
+  res.send(genre);
 });
 
 module.exports = router;
