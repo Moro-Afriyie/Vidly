@@ -34,9 +34,8 @@ router.post("/", (req, res) => {
   if (!req.body.genre) {
     res.status(404).send("Enter a genre ");
   }
-  const newGenre = { id: genres.length + 1, genre: req.body.genre };
-  genres.push(newGenre);
-  res.send(genres);
+  const genre = new Genre({ name: genre });
+  res.send(genre);
 });
 
 router.delete("/:genre", (req, res) => {
