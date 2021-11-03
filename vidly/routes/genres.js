@@ -32,6 +32,20 @@ router.post("/", (req, res) => {
   res.send(genre);
 });
 
+router.put("/:id", async (req, res) => {
+  const genre = await Genre.findByIdAndUpdate(
+    req.params.id,
+    {
+      name: req.body.name,
+    },
+    { new: true }
+  );
+  if (!genre) {
+    return res.status(404).send("The genre you entered does not exist ");
+  }
+  res.status(200).send(genre);
+});
+
 router.delete("/:id", async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id);
   if (!genre) {
