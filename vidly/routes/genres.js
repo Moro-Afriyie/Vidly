@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Genre = require("./models/genresModel");
+const Genre = require("../models/genresModel");
 
 const genres = [
   { id: 1, genre: "action" },

@@ -7,8 +7,8 @@ const genres = [
   { id: 4, genre: "romance" },
 ];
 
-const genresSchema = new Schema({
-  genre: { String, required: true },
+const genresSchema = new mongoose.Schema({
+  genre: { type: String, required: true },
 });
 
 const Genre = mongoose.model("Genres", genresSchema);
