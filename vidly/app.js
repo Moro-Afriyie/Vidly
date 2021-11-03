@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 PORT = 8000;
 
 mongoose
-  .connect("mongodb://localhost:27017", {
+  .connect("mongodb://localhost:27017/movie-app", {
     useUnifiedTopology: true,
   })
   .then((res) => console.log("connected to mongoDB"))

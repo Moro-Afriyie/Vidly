@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Genre = require("../models/genresModel");
 
-const genres = [
-  { id: 1, genre: "action" },
-  { id: 2, genre: "movies" },
-  { id: 3, genre: "horror" },
-  { id: 4, genre: "romance" },
-];
+// const genres = [
+//   { id: 1, genre: "action" },
+//   { id: 2, genre: "movies" },
+//   { id: 3, genre: "horror" },
+//   { id: 4, genre: "romance" },
+// ];
 
 router.get("/", async (req, res) => {
   try {
@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:genre", async (req, res) => {
   try {
-    const genre = await Genre.find({ name: req.params.genre });
+    const genre = await Genre.find({ genre: req.params.genre });
     if (!genre) {
       res.status(404).send("The genre you entered does not exist ");
     }
@@ -32,9 +32,10 @@ router.get("/:genre", async (req, res) => {
 
 router.post("/", (req, res) => {
   if (!req.body.genre) {
-    res.status(404).send("Enter a genre ");
+    return res.status(404).send("Enter a genre ");
   }
-  const genre = new Genre({ name: genre });
+  const genre = new Genre({ genre: req.body.genre });
+  genre.save();
   res.send(genre);
 });
 
