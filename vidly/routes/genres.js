@@ -9,16 +9,25 @@ const genres = [
   { id: 4, genre: "romance" },
 ];
 
-router.get("/", (req, res) => {
-  res.send(genres);
+router.get("/", async (req, res) => {
+  try {
+    const genres = await Genre.find({});
+    res.send(genres);
+  } catch (error) {
+    res.send("an error occured");
+  }
 });
 
-router.get("/:genre", (req, res) => {
-  const genre = genres.find((c) => c.genre === req.params.genre);
-  if (!genre) {
+router.get("/:genre", async (req, res) => {
+  try {
+    const genre = await Genre.find({ name: req.params.genre });
+    if (!genre) {
+      res.status(404).send("The genre you entered does not exist ");
+    }
+    res.send(genre);
+  } catch (error) {
     res.status(404).send("The genre you entered does not exist ");
   }
-  res.send(genre);
 });
 
 router.post("/", (req, res) => {

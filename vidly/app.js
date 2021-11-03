@@ -10,6 +10,7 @@ mongoose
   })
   .then((res) => console.log("connected to mongoDB"))
   .catch((err) => console.log("unable to connect to mongoDB"));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
