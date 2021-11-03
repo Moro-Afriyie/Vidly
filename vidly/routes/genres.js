@@ -20,9 +20,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:genre", async (req, res) => {
   try {
-    const genre = await Genre.find({ genre: req.params.genre });
+    const genre = await Genre.findOne({ genre: req.params.genre });
     if (!genre) {
-      res.status(404).send("The genre you entered does not exist ");
+      return res.status(404).send("The genre you entered does not exist ");
     }
     res.send(genre);
   } catch (error) {
