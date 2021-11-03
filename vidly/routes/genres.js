@@ -4,16 +4,16 @@ const Genre = require("../models/genresModel");
 
 router.get("/", async (req, res) => {
   try {
-    const genres = await Genre.find({});
+    const genres = await Genre.find({}).sort("name");
     res.send(genres);
   } catch (error) {
     res.send("an error occured");
   }
 });
 
-router.get("/:genre", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const genre = await Genre.findOne({ name: req.params.genre });
+    const genre = await Genre.findById(req.params.id);
     if (!genre) {
       return res.status(404).send("The genre you entered does not exist ");
     }
@@ -32,12 +32,12 @@ router.post("/", (req, res) => {
   res.send(genre);
 });
 
-router.delete("/:genre", async (req, res) => {
-  const genre = await Genre.findOneAndDelete({ name: req.params.genre });
+router.delete("/:id", async (req, res) => {
+  const genre = await Genre.findByIdAndRemove(req.params.id);
   if (!genre) {
     return res.status(404).send("The genre you entered does not exist ");
   }
-  genre.save();
+  res.status(200).send("genre deleted succesfully");
 });
 
 module.exports = router;
