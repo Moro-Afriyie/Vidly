@@ -47,11 +47,25 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+  if (req.body.genreId) {
+    genre = await Genre.findById(req.body.genreId);
+
+    if (!genre) return res.status(400).send("Invalid genre");
+    await Movie.findByIdAndUpdate(
+      req.params.id,
+      {
+        genre: {
+          _id: genre._id,
+          name: genre.name,
+        },
+      },
+      { new: true }
+    );
+  }
   const movie = await Movie.findByIdAndUpdate(
     req.params.id,
     {
       title: req.body.title,
-      genre: { name: req.body.genre },
       numberInStock: req.body.numberInStock,
       dailyRentalRate: req.body.dailyRentalRate,
     },
