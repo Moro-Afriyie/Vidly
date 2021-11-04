@@ -23,7 +23,7 @@ const validateMovie = (movie) => {
     dailyRentalRate: Joi.number(),
   });
 
-  return schema.validate(name);
+  return schema.validate(movie);
 };
 
 module.exports.Movie = Movie;
