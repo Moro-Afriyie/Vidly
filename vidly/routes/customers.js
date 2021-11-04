@@ -23,16 +23,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   if (!req.body.name) {
     return res.status(400).send("Enter a valid customer ");
   }
-  const customer = new Customer({
+  let customer = new Customer({
     isGold: req.body.isGold,
     name: req.body.name,
     phone: req.body.phone,
   });
-  customer.save();
+  customer = await customer.save();
   res.send(customer);
 });
 
