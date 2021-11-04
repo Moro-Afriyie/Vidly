@@ -7,7 +7,7 @@ const customerSchema = new mongoose.Schema({
   phone: { type: String, required: true },
 });
 
-const Customer = mongoose.model("Customers", customerSchema);
+const Customer = mongoose.model("Customer", customerSchema);
 
 const validateCustomer = (customer) => {
   const schema = Joi.object({

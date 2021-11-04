@@ -4,7 +4,7 @@ Joi.objectId = require("joi-objectid")(Joi);
 const { genresSchema } = require("./genresModel");
 
 const Movie = mongoose.model(
-  "Movies",
+  "Movie",
   new mongoose.Schema({
     title: { type: String, required: true, trim: true },
     genre: { type: genresSchema, required: true },
