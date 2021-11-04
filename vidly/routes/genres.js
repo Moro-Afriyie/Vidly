@@ -25,7 +25,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", (req, res) => {
   if (!req.body.name) {
-    return res.status(404).send("Enter a genre ");
+    return res.status(400).send("Enter a valid genre ");
   }
   const genre = new Genre({ name: req.body.name });
   genre.save();
