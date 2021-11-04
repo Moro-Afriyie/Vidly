@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Genre = require("../models/genresModel");
+const { Genre, validateGenre } = require("../models/genresModel");
 
 router.get("/", async (req, res) => {
   try {
@@ -24,11 +24,12 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  if (!req.body.name) {
-    return res.status(400).send("Enter a valid genre ");
+  const { error } = validateGenre(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
   }
   let genre = new Genre({ name: req.body.name });
-  genrer = genre.save();
+  genre = await genre.save();
   res.send(genre);
 });
 
