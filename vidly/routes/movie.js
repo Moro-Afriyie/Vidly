@@ -24,10 +24,10 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  //   const { error } = validateMovie(req.body);
-  //   if (error) {
-  //     return res.status(400).send(error.details[0].message);
-  //   }
+  const { error } = validateMovie(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
   let movie = new Movie({
     title: req.body.title,
     genre: { name: req.body.genre },
