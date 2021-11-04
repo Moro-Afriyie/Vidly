@@ -4,6 +4,7 @@ const genres = require("./routes/genres");
 const mongoose = require("mongoose");
 const customers = require("./routes/customers");
 const movies = require("./routes/movie");
+const rentals = require("./routes/rentals");
 PORT = 8000;
 
 /**
@@ -35,6 +36,8 @@ app.use("/api/genres", genres);
 app.use("/api/customers", customers);
 
 app.use("/api/movies", movies);
+
+app.use("/api/rentals", rentals);
 
 app.listen(PORT, () => {
   console.log(`server listening at ${PORT}`);
