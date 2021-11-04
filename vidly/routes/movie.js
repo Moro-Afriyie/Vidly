@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Movie, validateMovie } = require("../models/movieModel");
 const { Genre } = require("../models/genresModel");
+const { validateId } = require("../helpers/validateId");
 
 router.get("/", async (req, res) => {
   try {
@@ -48,25 +49,27 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   if (req.body.genreId) {
-    try {
-      const genre = await Genre.findById(req.body.genreId);
-
-      if (!genre) return res.status(400).send("Invalid genre");
-
-      await Movie.findByIdAndUpdate(
-        req.params.id,
-        {
-          genre: {
-            _id: genre._id,
-            name: genre.name,
-          },
-        },
-        { new: true }
-      );
-    } catch (error) {
-      return res.status(400).send("invalid genreId");
+    const { error } = validateId({ Id: req.body.genreId });
+    if (error) {
+      return res.status(400).send(error.details[0].message);
     }
+
+    const genre = await Genre.findById(req.body.genreId);
+
+    if (!genre) return res.status(400).send("Invalid genre");
+
+    await Movie.findByIdAndUpdate(
+      req.params.id,
+      {
+        genre: {
+          _id: genre._id,
+          name: genre.name,
+        },
+      },
+      { new: true }
+    );
   }
+
   const movie = await Movie.findByIdAndUpdate(
     req.params.id,
     {
