@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const genres = require("./routes/genres");
 const mongoose = require("mongoose");
+const customers = require("./routes/customers");
 PORT = 8000;
 
 /**
@@ -29,6 +30,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/genres", genres);
+
+app.use("/api/customers", customers);
 
 app.listen(PORT, () => {
   console.log(`server listening at ${PORT}`);
