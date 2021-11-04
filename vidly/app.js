@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const customers = require("./routes/customers");
 const movies = require("./routes/movie");
 const rentals = require("./routes/rentals");
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 PORT = 8000;
 
 /**
