@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Customer = require("../models/customersModels");
+const { Customer, validateCustomer } = require("../models/customersModels");
 
 router.get("/", async (req, res) => {
   try {
@@ -24,8 +24,9 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  if (!req.body.name) {
-    return res.status(400).send("Enter a valid customer ");
+  const { error } = validateCustomer(req.body);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
   }
   let customer = new Customer({
     isGold: req.body.isGold,
