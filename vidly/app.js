@@ -4,6 +4,16 @@ const genres = require("./routes/genres");
 const mongoose = require("mongoose");
 PORT = 8000;
 
+/**
+ * // Database connection
+mongoose.connect('mongodb://127.0.0.1:27017/geeksforgeeks', {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+});
+  
+ */
 mongoose
   .connect("mongodb://localhost:27017/vidly", {
     useUnifiedTopology: true,
