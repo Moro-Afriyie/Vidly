@@ -28,8 +28,9 @@ router.post("/", (req, res) => {
     return res.status(400).send("Enter a valid customer ");
   }
   const customer = new Customer({
+    isGold: req.body.isGold,
     name: req.body.name,
-    phoneNumber: req.body.phoneNumber,
+    phone: req.body.phone,
   });
   customer.save();
   res.send(customer);
@@ -39,8 +40,9 @@ router.put("/:id", async (req, res) => {
   const customer = await Customer.findByIdAndUpdate(
     req.params.id,
     {
+      isGold: req.body.isGold,
       name: req.body.name,
-      phoneNumber: req.body.phoneNumber,
+      phone: req.body.phone,
     },
     { new: true }
   );
