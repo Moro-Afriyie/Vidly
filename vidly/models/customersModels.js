@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const customerSchema = new mongoose.Schema({
-  isGold: { type: Boolean, required: true },
+  isGold: { type: Boolean, required: true, default: false },
   name: { type: String, required: true },
   phoneNumber: { type: String, required: true },
 });
