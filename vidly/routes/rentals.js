@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
   });
 
   try {
-    // transactions
+    // transactions when running two or more asynchronous tasks in mongodb
     new Fawn.Task()
       .save("rentals", rental)
       .update(
