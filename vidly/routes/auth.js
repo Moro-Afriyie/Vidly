@@ -3,6 +3,7 @@ const { User } = require("../models/userModel");
 const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
+const Joi = require("joi");
 
 // create a new user
 router.post("/", async (req, res) => {
@@ -15,7 +16,10 @@ router.post("/", async (req, res) => {
   if (!user) return res.status(400).send("Invalid email or password"); //if user doesn't exit
 
   // validate password
-  const validatePassword = bcrypt.compare(req.body.password, user.password);
+  const validatePassword = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
   if (!validatePassword)
     return res.status(400).send("Invalid email or password");
 
