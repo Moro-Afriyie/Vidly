@@ -9,7 +9,13 @@ const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const users = require("./routes/users");
 const auth = require("./routes/auth");
+const config = require("config");
 PORT = 8000;
+
+// if (!config.get("jwtPrivateKey")) {
+//   console.log("FATAL ERROR: jwtPrivateKey is not defined.");
+//   process.exit(1);
+// }
 
 /**
  * // Database connection

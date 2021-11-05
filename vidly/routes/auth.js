@@ -5,6 +5,7 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 
 // create a new user
 router.post("/", async (req, res) => {
@@ -25,7 +26,8 @@ router.post("/", async (req, res) => {
     return res.status(400).send("Invalid email or password");
 
   // generate a jason web token to the user
-  const token = jwt.sign({ _id: user._id }, "myJsonPrivateKey");
+  //   const token = jwt.sign({ _id: user._id }, config.get("jwtPrivateKey"));
+  const token = jwt.sign({ _id: user._id }, "jwtPrivateKey");
   res.send(token);
 });
 
