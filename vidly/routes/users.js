@@ -3,7 +3,6 @@ const { User, validateUser } = require("../models/userModel");
 const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 // create a new user
 router.post("/", async (req, res) => {
