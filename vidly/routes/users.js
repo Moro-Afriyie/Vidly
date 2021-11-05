@@ -3,6 +3,7 @@ const { User, validateUser } = require("../models/userModel");
 const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // create a new user
 router.post("/", async (req, res) => {
@@ -22,7 +23,13 @@ router.post("/", async (req, res) => {
 
   // ommit the password when sending response to the user
   //   _.pick(user, ["name", "email"]); we send only email and name to the user
-  res.send(_.pick(user, ["_id", "name", "email"]));
+
+  // set the headers to jsonwebtoken to allow users to login directly after registering
+  const token = jwt.sign({ _id: user._id }, "jwtPrivateKey");
+  //set the header to jsonwebtoken
+  res
+    .header("x-auth-token", token)
+    .send(_.pick(user, ["_id", "name", "email"]));
 });
 
 module.exports = router;
