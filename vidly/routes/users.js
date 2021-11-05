@@ -3,7 +3,14 @@ const { User, validateUser } = require("../models/userModel");
 const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
+const { auth } = require("../middleware/auth");
 
+// get a user (authorisation)
+router.get("/me", auth, async (req, res) => {
+  // since we set the req.user = decoded token in the auth.js we get the id from the payload in the token
+  const user = await User.findById(req.user._id).select("-password"); // omit the password
+  res.send(user);
+});
 // create a new user
 router.post("/", async (req, res) => {
   const { error } = validateUser(req.body);

@@ -4,8 +4,6 @@ const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
-const jwt = require("jsonwebtoken");
-const config = require("config");
 
 // create a new user
 router.post("/", async (req, res) => {

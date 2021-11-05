@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { Genre, validateGenre } = require("../models/genresModel");
+const { auth } = require("../middleware/auth");
+const { admin } = require("../middleware/admin");
 
 router.get("/", async (req, res) => {
   try {
@@ -23,7 +25,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validateGenre(req.body);
   if (error) {
     return res.status(400).send(error.details[0].message);
@@ -47,7 +49,8 @@ router.put("/:id", async (req, res) => {
   res.status(200).send(genre);
 });
 
-router.delete("/:id", async (req, res) => {
+// [auth, admin] array of middlewares
+router.delete("/:id", [auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id);
   if (!genre) {
     return res.status(404).send("The genre you entered does not exist ");
