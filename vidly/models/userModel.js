@@ -4,7 +4,7 @@ const Joi = require("joi");
 const User = mongoose.model(
   "User",
   new mongoose.Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true, trim: true, min: 5, max: 255 },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
   })
