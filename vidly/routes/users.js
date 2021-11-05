@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   //   _.pick(user, ["name", "email"]); we send only email and name to the user
 
   // set the headers to jsonwebtoken to allow users to login directly after registering
-  const token = jwt.sign({ _id: user._id }, "jwtPrivateKey");
+  const token = user.generateAuthToken();
   //set the header to jsonwebtoken
   res
     .header("x-auth-token", token)
