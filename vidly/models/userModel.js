@@ -17,7 +17,7 @@ const validateUser = (user) => {
       minDomainSegments: 2,
       tlds: { allow: ["com", "net"] },
     }),
-    password: Joi.string().min(8).max(1024).required(),
+    password: Joi.string().min(8).max(255).required(),
   });
 
   return schema.validate(user);
