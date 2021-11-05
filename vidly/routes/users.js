@@ -2,6 +2,7 @@ const express = require("express");
 const { User, validateUser } = require("../models/userModel");
 const router = express.Router();
 
+// create a new user
 router.post("/", async (req, res) => {
   const { error } = validateUser(req.body);
 
