@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
 
   // generate a jason web token to the user
   //   const token = jwt.sign({ _id: user._id }, config.get("jwtPrivateKey"));
-  const token = jwt.sign({ _id: user._id }, "jwtPrivateKey");
+  const token = user.generateAuthToken();
   res.send(token);
 });
 
