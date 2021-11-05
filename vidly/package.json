@@ -16,6 +16,7 @@
     "g": "^2.0.1",
     "joi": "^17.4.2",
     "joi-objectid": "^4.0.2",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.14"
