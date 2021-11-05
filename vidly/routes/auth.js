@@ -1,28 +1,37 @@
 const express = require("express");
-const { User, validateUser } = require("../models/userModel");
+const { User } = require("../models/userModel");
 const router = express.Router();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 
 // create a new user
 router.post("/", async (req, res) => {
-  const { error } = validateUser(req.body);
+  const { error } = validate(req.body);
 
   if (error) return res.status(400).send(error.details[0].message);
 
   //check if a user exists
-  const checkUser = await User.findOne({ email: req.body.email });
-  if (checkUser) return res.status(400).send("user already registered");
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(400).send("Invalid email or password"); //if user doesn't exit
 
-  const user = new User(_.pick(req.body, ["name", "email", "password"]));
-  const salt = await bcrypt.genSalt(10); // 10 is the number of times the algorithm is to run
-  user.password = await bcrypt.hash(user.password, salt); // generates a hashed password
+  // validate password
+  const validatePassword = bcrypt.compare(req.body.password, user.password);
+  if (!validatePassword)
+    return res.status(400).send("Invalid email or password");
 
-  await user.save();
-
-  // ommit the password when sending response to the user
-  //   _.pick(user, ["name", "email"]); we send only email and name to the user
-  res.send(_.pick(user, ["_id", "name", "email"]));
+  res.send(true);
 });
+
+const validate = (req) => {
+  const schema = Joi.object({
+    email: Joi.string().email({
+      minDomainSegments: 2,
+      tlds: { allow: ["com", "net"] },
+    }),
+    password: Joi.string().min(8).max(255).required(),
+  });
+
+  return schema.validate(req);
+};
 
 module.exports = router;
