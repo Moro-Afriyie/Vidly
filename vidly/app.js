@@ -7,6 +7,7 @@ const movies = require("./routes/movie");
 const rentals = require("./routes/rentals");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
+const users = require("./routes/users");
 PORT = 8000;
 
 /**
@@ -40,6 +41,8 @@ app.use("/api/customers", customers);
 app.use("/api/movies", movies);
 
 app.use("/api/rentals", rentals);
+
+app.use("/api/users", users);
 
 app.listen(PORT, () => {
   console.log(`server listening at ${PORT}`);
